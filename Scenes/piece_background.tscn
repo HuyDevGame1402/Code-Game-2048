@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtjtmjuyp7h8v"]
+
+[ext_resource type="Texture2D" uid="uid://ck7xgagxts6ed" path="res://Assets/2048/Tile Background.png" id="1_1lkqv"]
+
+[node name="PieceBackground" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_1lkqv")

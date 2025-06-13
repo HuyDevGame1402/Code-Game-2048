@@ -1,0 +1,94 @@
+[gd_scene load_steps=22 format=3 uid="uid://b073fb6x7d38c"]
+
+[ext_resource type="Texture2D" uid="uid://biq2weo1rk83n" path="res://Assets/2048/Background.png" id="1_yw0c4"]
+[ext_resource type="Script" path="res://Scripts/Grid.gd" id="2_71wqp"]
+[ext_resource type="Script" path="res://Scripts/TouchControl.gd" id="3_35yuv"]
+[ext_resource type="PackedScene" uid="uid://bwmjtun3ekrmx" path="res://Scenes/Pieces/2.tscn" id="3_vtx87"]
+[ext_resource type="Script" path="res://Scripts/KeyboardControl.gd" id="4_63ouf"]
+[ext_resource type="PackedScene" uid="uid://dpr0av2013d56" path="res://Scenes/Pieces/four_piece.tscn" id="4_wvr3m"]
+[ext_resource type="PackedScene" uid="uid://b5f2kugv72g7p" path="res://Scenes/Pieces/eight_piece.tscn" id="5_llphl"]
+[ext_resource type="PackedScene" uid="uid://dtjtmjuyp7h8v" path="res://Scenes/piece_background.tscn" id="5_lyv8l"]
+[ext_resource type="PackedScene" uid="uid://c61rmb8dlkonu" path="res://Scenes/Pieces/sixteen_piece.tscn" id="6_3kmb4"]
+[ext_resource type="PackedScene" uid="uid://do5b5odofsl8q" path="res://Scenes/Pieces/thirty_two_piece.tscn" id="7_5rq03"]
+[ext_resource type="PackedScene" uid="uid://giwhu1oij6aj" path="res://Scenes/Pieces/64_piece.tscn" id="8_wl62v"]
+[ext_resource type="PackedScene" uid="uid://d2emaaibroko4" path="res://Scenes/Pieces/128_piece.tscn" id="9_0bat7"]
+[ext_resource type="PackedScene" uid="uid://cek1fejget8p5" path="res://Scenes/Pieces/256_piece.tscn" id="10_rcn5l"]
+[ext_resource type="PackedScene" uid="uid://bsjvtaj6l6t8a" path="res://Scenes/Pieces/512_piece.tscn" id="11_tojel"]
+[ext_resource type="PackedScene" uid="uid://cq5bokup0qryc" path="res://Scenes/Pieces/1024_piece.tscn" id="12_5mifw"]
+[ext_resource type="PackedScene" uid="uid://c18q8htpn0tfs" path="res://Scenes/Pieces/2048_piece.tscn" id="13_ir7ae"]
+[ext_resource type="PackedScene" uid="uid://dcdurivwsfx4s" path="res://Scenes/Pieces/4096_piece.tscn" id="14_cwo4w"]
+[ext_resource type="PackedScene" uid="uid://b5285lr0wuipt" path="res://Scenes/Pieces/8192_piece.tscn" id="15_7fdq6"]
+[ext_resource type="PackedScene" uid="uid://comhrhlx7lmmu" path="res://Scenes/Pieces/16384_piece.tscn" id="16_m2x33"]
+[ext_resource type="Texture2D" uid="uid://4o8auahikjbm" path="res://Assets/2048/Top UI.png" id="20_ogayf"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_vvch6"]
+size = Vector2(512, 512)
+
+[node name="Main" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+offset_right = 576.0
+offset_bottom = 1024.0
+texture = ExtResource("1_yw0c4")
+
+[node name="BoardBackground" type="Sprite2D" parent="."]
+modulate = Color(0.376471, 0.376471, 0.439216, 0.545098)
+self_modulate = Color(0.376471, 0.376471, 0.439216, 0.576471)
+position = Vector2(290, 605)
+texture = SubResource("PlaceholderTexture2D_vvch6")
+
+[node name="Grid" type="Node2D" parent="."]
+script = ExtResource("2_71wqp")
+four_piece_chance = 75
+two_piece = ExtResource("3_vtx87")
+four_piece = ExtResource("4_wvr3m")
+piece_8 = ExtResource("5_llphl")
+piece_16 = ExtResource("6_3kmb4")
+piece_32 = ExtResource("7_5rq03")
+piece_64 = ExtResource("8_wl62v")
+piece_128 = ExtResource("9_0bat7")
+piece_256 = ExtResource("10_rcn5l")
+piece_512 = ExtResource("11_tojel")
+piece_1024 = ExtResource("12_5mifw")
+piece_2048 = ExtResource("13_ir7ae")
+piece_4096 = ExtResource("14_cwo4w")
+piece_8192 = ExtResource("15_7fdq6")
+piece_16384 = ExtResource("16_m2x33")
+background_piece = ExtResource("5_lyv8l")
+
+[node name="TouchControl" type="Node2D" parent="."]
+script = ExtResource("3_35yuv")
+
+[node name="KeyboardControl" type="Node2D" parent="."]
+position = Vector2(0, 4)
+script = ExtResource("4_63ouf")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("20_ogayf")
+centered = false
+
+[node name="Button" type="Button" parent="."]
+visible = false
+offset_left = 147.0
+offset_top = 555.0
+offset_right = 436.0
+offset_bottom = 667.0
+
+[node name="Label" type="Label" parent="Button"]
+layout_mode = 0
+offset_right = 289.0
+offset_bottom = 112.0
+theme_override_font_sizes/font_size = 50
+text = "Restart"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="move" from="TouchControl" to="Grid" method="_on_touch_control_move"]
+[connection signal="move" from="KeyboardControl" to="Grid" method="_on_keyboard_control_move"]
+[connection signal="timeout" from="Timer" to="Grid" method="_on_timer_timeout"]
+[connection signal="pressed" from="Button" to="Grid" method="_on_button_pressed"]
